@@ -3,11 +3,12 @@ from multiprocessing.pool import ThreadPool
 import difflib
 import english
 import threading
+import time
 
 spanish = [line.rstrip('\n').lower() for line in open('spanish.txt')]
 german = [line.rstrip('\n').lower() for line in open('german.txt')]
 french = [line.rstrip('\n').lower() for line in open('french.txt')]
-
+start_time = time.time()
 symbols = "!$%&/()=?|@#'\\\",[]{-_;.:}1234567890<>"
 
 class englishThread (threading.Thread):
@@ -23,10 +24,11 @@ class englishThread (threading.Thread):
             for i in range(0, len(symbols)):
               word = word.replace(symbols[i], "")
             res = difflib.get_close_matches(word, english.words)
-            if len(res) > 0 and word in res:
+            if word in english.words:
                self.words_in_language += 1.0
         probability = (self.words_in_language / self.word_count) * 100
         print "It is " + str(probability) + "% English"
+        print("--- %s seconds ---" % (time.time() - start_time))
 
 class spanishThread (threading.Thread):
     def __init__(self, sentence):
@@ -40,11 +42,11 @@ class spanishThread (threading.Thread):
         for word in words:
             for i in range(0, len(symbols)):
               word = word.replace(symbols[i], "")
-            res = difflib.get_close_matches(word, spanish)
-            if len(res) > 0 and word in res:
+            if word in spanish:
                self.words_in_language += 1.0
         probability = (self.words_in_language / self.word_count) * 100
         print "It is " + str(probability) + "% Spanish"
+        print("--- %s seconds ---" % (time.time() - start_time))
 
 class germanThread (threading.Thread):
     def __init__(self, sentence):
@@ -58,11 +60,11 @@ class germanThread (threading.Thread):
         for word in words:
             for i in range(0, len(symbols)):
               word = word.replace(symbols[i], "")
-            res = difflib.get_close_matches(word, german)
-            if len(res) > 0 and word in res:
+            if word in german:
                self.words_in_language += 1.0
         probability = (self.words_in_language / self.word_count) * 100
         print "It is " + str(probability) + "% German"
+        print("--- %s seconds ---" % (time.time() - start_time))
 
 class frenchThread (threading.Thread):
     def __init__(self, sentence):
@@ -76,14 +78,14 @@ class frenchThread (threading.Thread):
         for word in words:
             for i in range(0, len(symbols)):
               word = word.replace(symbols[i], "")
-            res = difflib.get_close_matches(word, french)
-            if len(res) > 0 and word in res:
+            if word in french:
                self.words_in_language += 1.0
         probability = (self.words_in_language / self.word_count) * 100
         print "It is " + str(probability) + "% French"
+        print("--- %s seconds ---" % (time.time() - start_time))
 
 # Get sentence
-sentence = raw_input("Enter your text\n") 
+sentence = "Hello world"
 
 # Create new threads
 thread1 = englishThread(sentence.lower())
@@ -96,4 +98,5 @@ thread1.start()
 thread2.start()
 thread3.start()
 thread4.start()
+
 
