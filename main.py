@@ -37,7 +37,7 @@ class spanishThread (threading.Thread):
         self.words = sentence.split()
         self.word_count = len(self.words)
     def run(self):
-        words = self.sentence.split()
+
         for word in words:
             for i in range(0, len(symbols)):
               word = word.replace(symbols[i], "")
@@ -81,21 +81,71 @@ class frenchThread (threading.Thread):
                self.words_in_language += 1.0
         probability = (self.words_in_language / self.word_count) * 100
         print "It is " + str(probability) + "% French\n"
-        print("--- %s seconds ---" % (time.time() - start_time))
+        print("--- %s ms ---" % ((time.time() - start_time) * 1000))
+
+def is_english(sentence):
+  sentence= sentence
+  words_in_language = 0.0
+  words = sentence.split()
+  word_count = len(words)
+  for word in words:
+    if word in english:
+      words_in_language += 1.0
+  probability = (words_in_language / word_count)
+  return probability
+def is_spanish(sentence):
+  sentence= sentence
+  words_in_language = 0.0
+  words = sentence.split()
+  word_count = len(words)
+  for word in words:
+    if word in spanish:
+      words_in_language += 1.0
+  probability = (words_in_language / word_count)
+  return probability
+def is_german(sentence):
+  sentence= sentence
+  words_in_language = 0.0
+  words = sentence.split()
+  word_count = len(words)
+  for word in words:
+    if word in german:
+      words_in_language += 1.0
+  probability = (words_in_language / word_count)
+  return probability
+def is_french(sentence):
+  sentence= sentence
+  words_in_language = 0.0
+  words = sentence.split()
+  word_count = len(words)
+  for word in words:
+    if word in french:
+      words_in_language += 1.0
+  probability = (words_in_language / word_count)
+  return probability
+def languages(sentence):
+  for i in range(0, len(symbols)):
+    sentence = sentence.replace(symbols[i], "")
+  return (("english", is_english(sentence)), ("spanish", is_spanish(sentence)), ("german", is_german(sentence)), ("french", is_french(sentence)))
+
 
 # Get sentence
 sentence = "Hello world"
 
-# Create new threads
-thread1 = englishThread(sentence.lower())
-thread2 = spanishThread(sentence.lower())
-thread3 = germanThread(sentence.lower())
-thread4 = frenchThread(sentence.lower())
+print languages(sentence.lower())
 
-# Start new Threads
-thread1.start()
-thread2.start()
-thread3.start()
-thread4.start()
+print("--- %s ms ---" % ((time.time() - start_time) * 1000))
+
+# Create new threads
+# thread1 = englishThread(sentence.lower())
+# thread2 = spanishThread(sentence.lower())
+# thread3 = germanThread(sentence.lower())
+# thread4 = frenchThread(sentence.lower())
+
+# # Start new Threads
+# thread1.start()
+# thread2.start()
+# thread3.start()
+# thread4.start()
 
 
