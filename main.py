@@ -4,10 +4,10 @@ import difflib
 import threading
 import time
 
-english = [line.rstrip('\n').lower() for line in open('english.txt')]
-spanish = [line.rstrip('\n').lower() for line in open('spanish.txt')]
-german = [line.rstrip('\n').lower() for line in open('german.txt')]
-french = [line.rstrip('\n').lower() for line in open('french.txt')]
+english = set([line.rstrip('\n').lower() for line in open('english.txt')])
+spanish = set([line.rstrip('\n').lower() for line in open('spanish.txt')])
+german = set([line.rstrip('\n').lower() for line in open('german.txt')])
+french = set([line.rstrip('\n').lower() for line in open('french.txt')])
 start_time = time.time()
 symbols = "!$%&/()=?|@#'\\\",[]{-_;.:}1234567890<>"
 
@@ -104,7 +104,6 @@ def is_spanish(sentence):
   probability = (words_in_language / word_count)
   return probability
 def is_german(sentence):
-  sentence= sentence
   words_in_language = 0.0
   words = sentence.split()
   word_count = len(words)
