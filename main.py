@@ -1,10 +1,10 @@
 #imports
 from multiprocessing.pool import ThreadPool
 import difflib
-import english
 import threading
 import time
 
+english = [line.rstrip('\n').lower() for line in open('english.txt')]
 spanish = [line.rstrip('\n').lower() for line in open('spanish.txt')]
 german = [line.rstrip('\n').lower() for line in open('german.txt')]
 french = [line.rstrip('\n').lower() for line in open('french.txt')]
@@ -23,11 +23,10 @@ class englishThread (threading.Thread):
         for word in words:
             for i in range(0, len(symbols)):
               word = word.replace(symbols[i], "")
-            res = difflib.get_close_matches(word, english.words)
-            if word in english.words:
+            if word in english:
                self.words_in_language += 1.0
         probability = (self.words_in_language / self.word_count) * 100
-        print "It is " + str(probability) + "% English"
+        print "It is " + str(probability) + "% English\n"
         print("--- %s seconds ---" % (time.time() - start_time))
 
 class spanishThread (threading.Thread):
@@ -45,7 +44,7 @@ class spanishThread (threading.Thread):
             if word in spanish:
                self.words_in_language += 1.0
         probability = (self.words_in_language / self.word_count) * 100
-        print "It is " + str(probability) + "% Spanish"
+        print "It is " + str(probability) + "% Spanish\n"
         print("--- %s seconds ---" % (time.time() - start_time))
 
 class germanThread (threading.Thread):
@@ -63,7 +62,7 @@ class germanThread (threading.Thread):
             if word in german:
                self.words_in_language += 1.0
         probability = (self.words_in_language / self.word_count) * 100
-        print "It is " + str(probability) + "% German"
+        print "It is " + str(probability) + "% German\n"
         print("--- %s seconds ---" % (time.time() - start_time))
 
 class frenchThread (threading.Thread):
@@ -81,7 +80,7 @@ class frenchThread (threading.Thread):
             if word in french:
                self.words_in_language += 1.0
         probability = (self.words_in_language / self.word_count) * 100
-        print "It is " + str(probability) + "% French"
+        print "It is " + str(probability) + "% French\n"
         print("--- %s seconds ---" % (time.time() - start_time))
 
 # Get sentence
