@@ -1,2 +1,2 @@
-# python-detect-language
-Detects the language of the sentence.
+# Python Language Detector
+Detects the language of a sentence.
