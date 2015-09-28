@@ -8,7 +8,6 @@ english = set([line.rstrip('\n').lower() for line in open('english.txt')])
 spanish = set([line.rstrip('\n').lower() for line in open('spanish.txt')])
 german = set([line.rstrip('\n').lower() for line in open('german.txt')])
 french = set([line.rstrip('\n').lower() for line in open('french.txt')])
-start_time = time.time()
 symbols = "!$%&/()=?|@#'\\\",[]{-_;.:}1234567890<>"
 
 class englishThread (threading.Thread):
@@ -129,8 +128,8 @@ def languages(sentence):
 
 
 # Get sentence
-sentence = "Hello world"
-
+sentence = raw_input('Write your text\n')
+start_time = time.time()
 print languages(sentence.lower())
 
 print("--- %s ms ---" % ((time.time() - start_time) * 1000))
